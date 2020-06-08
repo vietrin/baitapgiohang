@@ -1,0 +1,714 @@
+USE [master]
+GO
+/****** Object:  Database [trungtamtinhoc]    Script Date: 6/8/2020 3:47:16 PM ******/
+CREATE DATABASE [trungtamtinhoc]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'trungtamtinhoc', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\trungtamtinhoc.mdf' , SIZE = 5120KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'trungtamtinhoc_log', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\trungtamtinhoc_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [trungtamtinhoc] SET COMPATIBILITY_LEVEL = 110
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [trungtamtinhoc].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [trungtamtinhoc] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [trungtamtinhoc] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [trungtamtinhoc] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [trungtamtinhoc] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [trungtamtinhoc] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [trungtamtinhoc] SET  MULTI_USER 
+GO
+ALTER DATABASE [trungtamtinhoc] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [trungtamtinhoc] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [trungtamtinhoc] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [trungtamtinhoc] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+USE [trungtamtinhoc]
+GO
+/****** Object:  Table [dbo].[chungchi]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[chungchi](
+	[machungchi] [int] IDENTITY(1,1) NOT NULL,
+	[tenchungchi] [nvarchar](250) NULL,
+ CONSTRAINT [PK_chungchi] PRIMARY KEY CLUSTERED 
+(
+	[machungchi] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[hocvien]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[hocvien](
+	[mahocvien] [int] IDENTITY(1,1) NOT NULL,
+	[tenhocvien] [varchar](50) NULL,
+	[gioitinh] [varchar](50) NULL,
+	[ngaysinh] [varchar](50) NULL,
+	[sodienthoai] [varchar](50) NULL,
+	[diachi] [varchar](250) NULL,
+ CONSTRAINT [PK_hocvien] PRIMARY KEY CLUSTERED 
+(
+	[mahocvien] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[hocvien_lophoc]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[hocvien_lophoc](
+	[malophoc] [int] NOT NULL,
+	[mahocvien] [int] NOT NULL,
+	[ngaydangki] [date] NULL,
+ CONSTRAINT [PK_hocvien_lophoc] PRIMARY KEY CLUSTERED 
+(
+	[malophoc] ASC,
+	[mahocvien] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[lophoc]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[lophoc](
+	[malophoc] [int] IDENTITY(1,1) NOT NULL,
+	[tenlophoc] [nvarchar](50) NULL,
+	[machungchi] [int] NULL,
+	[ngaybatdau] [nvarchar](50) NULL,
+	[thoigianhoc] [nvarchar](50) NULL,
+	[hocphi] [int] NULL,
+ CONSTRAINT [PK_lophoc] PRIMARY KEY CLUSTERED 
+(
+	[malophoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[phieuthu]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[phieuthu](
+	[maphieuthu] [int] IDENTITY(1,1) NOT NULL,
+	[mahocvien] [int] NOT NULL,
+	[malophoc] [int] NOT NULL,
+	[nguoithu] [nvarchar](50) NULL,
+	[sotien] [int] NULL,
+	[ngaynop] [varchar](50) NULL,
+ CONSTRAINT [PK_phieuthu] PRIMARY KEY CLUSTERED 
+(
+	[maphieuthu] ASC,
+	[mahocvien] ASC,
+	[malophoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[taikhoan]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[taikhoan](
+	[username] [nvarchar](50) NOT NULL,
+	[password] [nchar](20) NULL,
+ CONSTRAINT [PK_admin] PRIMARY KEY CLUSTERED 
+(
+	[username] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[View_danhsachlop]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_danhsachlop]
+AS
+SELECT        dbo.hocvien.tenhocvien, dbo.hocvien.gioitinh, dbo.hocvien.ngaysinh, dbo.hocvien.sodienthoai, dbo.hocvien.diachi, dbo.lophoc.tenlophoc, dbo.lophoc.hocphi, dbo.hocvien_lophoc.ngaydangki
+FROM            dbo.hocvien INNER JOIN
+                         dbo.hocvien_lophoc ON dbo.hocvien.mahocvien = dbo.hocvien_lophoc.malophoc INNER JOIN
+                         dbo.lophoc ON dbo.hocvien_lophoc.malophoc = dbo.lophoc.malophoc
+GO
+/****** Object:  View [dbo].[View_DanhSachLopDaDangKy]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_DanhSachLopDaDangKy]
+AS
+SELECT DISTINCT dbo.lophoc.malophoc, dbo.lophoc.tenlophoc, dbo.lophoc.machungchi, dbo.lophoc.ngaybatdau, dbo.lophoc.thoigianhoc, dbo.lophoc.hocphi
+FROM            dbo.hocvien_lophoc INNER JOIN
+                         dbo.lophoc ON dbo.hocvien_lophoc.malophoc = dbo.lophoc.malophoc
+GO
+/****** Object:  View [dbo].[View_Danhsachphieuthu]    Script Date: 6/8/2020 3:47:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_Danhsachphieuthu]
+AS
+SELECT        dbo.phieuthu.maphieuthu, dbo.hocvien.tenhocvien, dbo.hocvien.sodienthoai, dbo.phieuthu.nguoithu, dbo.phieuthu.sotien, dbo.lophoc.tenlophoc, dbo.phieuthu.ngaynop
+FROM            dbo.hocvien INNER JOIN
+                         dbo.phieuthu ON dbo.hocvien.mahocvien = dbo.phieuthu.mahocvien INNER JOIN
+                         dbo.lophoc ON dbo.phieuthu.malophoc = dbo.lophoc.malophoc
+GO
+SET IDENTITY_INSERT [dbo].[chungchi] ON 
+GO
+INSERT [dbo].[chungchi] ([machungchi], [tenchungchi]) VALUES (1, N'Lap trinh java core')
+GO
+INSERT [dbo].[chungchi] ([machungchi], [tenchungchi]) VALUES (2, N'Lap trinh C#')
+GO
+INSERT [dbo].[chungchi] ([machungchi], [tenchungchi]) VALUES (3, N'Lap trinh web PhP')
+GO
+SET IDENTITY_INSERT [dbo].[chungchi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[hocvien] ON 
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (1, N'Nguyen Viet Rin', N'Nu', N'1900-01-01     ', N'0972696951', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (3, N'Nguyen Viet Rin', N'Nu', N'2020-06-01', N'0972696951', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (4, N'Nguyen Viet Son', N'Nam  ', N'1900-01-01     ', N'0972696951', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (6, N'Nguyen Viet Bao', N'Nam  ', N'1900-01-01     ', N'0972696951', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (7, N'Nguyen Viet Rin7', N'nam  ', N'1998-10-26     ', N'000100000', N'Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (14, N'DFGDFGDFGDFGDF', N'Nu', N'2020-05-20', N'0972696951', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (17, N'Nguyen Viet Rin7', N'Nu', N'2020-05-16', N'0353453454', N'Thua Thien Hue')
+GO
+INSERT [dbo].[hocvien] ([mahocvien], [tenhocvien], [gioitinh], [ngaysinh], [sodienthoai], [diachi]) VALUES (24, N'Nguyen Viet Rin', N'Nu', N'2020-06-18', N'0972696951', N'ddd')
+GO
+SET IDENTITY_INSERT [dbo].[hocvien] OFF
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 1, CAST(N'1900-01-01' AS Date))
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 3, CAST(N'2020-05-22' AS Date))
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 6, CAST(N'2020-05-22' AS Date))
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 7, CAST(N'2020-05-22' AS Date))
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 9, CAST(N'2020-05-22' AS Date))
+GO
+INSERT [dbo].[hocvien_lophoc] ([malophoc], [mahocvien], [ngaydangki]) VALUES (1, 11, CAST(N'2020-05-22' AS Date))
+GO
+SET IDENTITY_INSERT [dbo].[lophoc] ON 
+GO
+INSERT [dbo].[lophoc] ([malophoc], [tenlophoc], [machungchi], [ngaybatdau], [thoigianhoc], [hocphi]) VALUES (1, N'java co ban ', 1, N'1900-01-01', N'3 thang', 1500000)
+GO
+INSERT [dbo].[lophoc] ([malophoc], [tenlophoc], [machungchi], [ngaybatdau], [thoigianhoc], [hocphi]) VALUES (2, N'C#', 2, NULL, N'6 thang', 2000000)
+GO
+SET IDENTITY_INSERT [dbo].[lophoc] OFF
+GO
+SET IDENTITY_INSERT [dbo].[phieuthu] ON 
+GO
+INSERT [dbo].[phieuthu] ([maphieuthu], [mahocvien], [malophoc], [nguoithu], [sotien], [ngaynop]) VALUES (4, 1, 1, N'admin', 1500000, N'')
+GO
+INSERT [dbo].[phieuthu] ([maphieuthu], [mahocvien], [malophoc], [nguoithu], [sotien], [ngaynop]) VALUES (5, 4, 1, N'admin', 1500000, N'')
+GO
+SET IDENTITY_INSERT [dbo].[phieuthu] OFF
+GO
+ALTER TABLE [dbo].[hocvien_lophoc]  WITH CHECK ADD  CONSTRAINT [FK_hocvien_lophoc_hocvien] FOREIGN KEY([malophoc])
+REFERENCES [dbo].[hocvien] ([mahocvien])
+GO
+ALTER TABLE [dbo].[hocvien_lophoc] CHECK CONSTRAINT [FK_hocvien_lophoc_hocvien]
+GO
+ALTER TABLE [dbo].[hocvien_lophoc]  WITH CHECK ADD  CONSTRAINT [FK_hocvien_lophoc_lophoc] FOREIGN KEY([malophoc])
+REFERENCES [dbo].[lophoc] ([malophoc])
+GO
+ALTER TABLE [dbo].[hocvien_lophoc] CHECK CONSTRAINT [FK_hocvien_lophoc_lophoc]
+GO
+ALTER TABLE [dbo].[lophoc]  WITH CHECK ADD  CONSTRAINT [FK_lophoc_chungchi] FOREIGN KEY([machungchi])
+REFERENCES [dbo].[chungchi] ([machungchi])
+GO
+ALTER TABLE [dbo].[lophoc] CHECK CONSTRAINT [FK_lophoc_chungchi]
+GO
+ALTER TABLE [dbo].[phieuthu]  WITH CHECK ADD  CONSTRAINT [FK_phieuthu_hocvien] FOREIGN KEY([mahocvien])
+REFERENCES [dbo].[hocvien] ([mahocvien])
+GO
+ALTER TABLE [dbo].[phieuthu] CHECK CONSTRAINT [FK_phieuthu_hocvien]
+GO
+ALTER TABLE [dbo].[phieuthu]  WITH CHECK ADD  CONSTRAINT [FK_phieuthu_lophoc] FOREIGN KEY([malophoc])
+REFERENCES [dbo].[lophoc] ([malophoc])
+GO
+ALTER TABLE [dbo].[phieuthu] CHECK CONSTRAINT [FK_phieuthu_lophoc]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "hocvien"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "hocvien_lophoc"
+            Begin Extent = 
+               Top = 6
+               Left = 246
+               Bottom = 119
+               Right = 416
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "lophoc"
+            Begin Extent = 
+               Top = 6
+               Left = 454
+               Bottom = 136
+               Right = 624
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 10
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_danhsachlop'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_danhsachlop'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "hocvien_lophoc"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 161
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "lophoc"
+            Begin Extent = 
+               Top = 6
+               Left = 246
+               Bottom = 171
+               Right = 416
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_DanhSachLopDaDangKy'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_DanhSachLopDaDangKy'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "hocvien"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "lophoc"
+            Begin Extent = 
+               Top = 7
+               Left = 849
+               Bottom = 137
+               Right = 1019
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "phieuthu"
+            Begin Extent = 
+               Top = 72
+               Left = 457
+               Bottom = 202
+               Right = 627
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_Danhsachphieuthu'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_Danhsachphieuthu'
+GO
+USE [master]
+GO
+ALTER DATABASE [trungtamtinhoc] SET  READ_WRITE 
+GO
